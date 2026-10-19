@@ -9,7 +9,7 @@ export default function Hero() {
       id="hero"
       className="relative mx-auto mt-2 w-full max-w-[1600px] px-3 md:px-5"
     >
-      <div className="relative min-h-[480px] overflow-hidden rounded-[24px] bg-[#f5f0e6] md:min-h-[580px]">
+      <div className="relative min-h-[480px] overflow-hidden rounded-[24px] bg-[#f5f0e6] md:min-h-[630px]">
 
         {/* Background image */}
         <Image
@@ -114,7 +114,7 @@ export default function Hero() {
             </p>
           </div>
 
-          <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border bg-blue-#FFFFFF border-gray-100 text-[#29145f]">
+          <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border bg-white border-gray-100 text-[#29145f]">
             <Plus size={16} />
           </span>
         </div>

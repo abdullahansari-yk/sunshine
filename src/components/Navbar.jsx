@@ -21,7 +21,7 @@ export default function Navbar() {
     const [menuOpen, setMenuOpen] = useState(false);
 
     return (
-        <header className="relative z-50 border-b border-[#eee9df] bg-white">
+        <header className="relative z-50 border-[#eee9df] bg-white">
             <nav className="mx-auto flex max-w-[1440px] items-center justify-between gap-4 px-5 py-3 md:px-8 lg:px-12">
 
                 {/* Menu button */}
