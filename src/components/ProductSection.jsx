@@ -49,7 +49,7 @@ const categories = [
   },
 ];
 
-export default function ProductsSection() {
+export default function ProductSection() {
   const [startIndex, setStartIndex] = useState(0);
 
   const visibleCategories = Array.from({ length: 3 }, (_, index) => {

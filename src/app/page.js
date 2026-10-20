@@ -2,7 +2,7 @@ import CropSection from "@/components/CropSection";
 import Hero from "@/components/Hero";
 import KrishikulSection from "@/components/KrishikulSection";
 import Navbar from "@/components/Navbar";
-import ProductsSection from "@/components/ProductSection";
+import ProductSection from "@/components/ProductSection";
 import Stats from "@/components/Stats";
 
 export default function Home() {
@@ -12,7 +12,7 @@ export default function Home() {
       <Hero/>
       <Stats/>
       <CropSection/>
-      <ProductsSection/>
+      <ProductSection/>
       <KrishikulSection/>
     </main>
   );
