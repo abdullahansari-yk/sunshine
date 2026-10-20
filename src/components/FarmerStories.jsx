@@ -3,8 +3,8 @@ import { ArrowRight } from "lucide-react";
 
 export default function FarmerStories() {
   return (
-    <section className="mx-auto max-w-[1440px] px-5 py-12 md:px-8 lg:px-10 lg:py-16">
-      
+    <section className="mx-auto max-w-[98vw] px-5 py-12 md:px-8 lg:px-10 lg:py-16">
+
       {/* SECTION HEADING */}
       <div className="mb-7">
         <p className="mb-3 flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-[#c99a3a]">
@@ -19,12 +19,12 @@ export default function FarmerStories() {
       </div>
 
       {/* TESTIMONIAL CONTENT */}
-      <div className="grid grid-cols-1 items-center gap-8 md:grid-cols-2 md:gap-10 lg:gap-12">
+      <div className="grid grid-cols-1 items-center  gap-8 md:grid-cols-[35%_65%] md:gap-10 lg:gap-12">
 
         {/* LEFT: FARMER IMAGE */}
-        <div className="relative h-[280px] overflow-hidden rounded-[22px] sm:h-[340px] lg:h-[370px]">
+        <div className="relative h-[280px] overflow-hidden rounded-[22px] sm:h-[340px] lg:h-[480px]">
           <Image
-            src="/land.jpg"
+            src="/img.jpg"
             alt="Farmer working in a paddy field"
             fill
             priority
@@ -36,14 +36,14 @@ export default function FarmerStories() {
           <div className="absolute left-3 top-3 flex items-center gap-2 rounded-full bg-white/95 px-3 py-2 shadow-sm">
             <span className="h-2 w-2 rounded-full bg-[#ffc400]" />
 
-            <span className="text-[9px] font-semibold text-[#29145f]">
+            <span className="text-[12px] font-semibold text-[#29145f]">
               Paddy · Maharashtra
             </span>
           </div>
         </div>
 
         {/* RIGHT: TESTIMONIAL */}
-        <div className="flex min-h-[280px] flex-col justify-between py-2 md:min-h-[340px] lg:min-h-[370px]">
+        <div className="flex min-h-[280px] pr-10 flex-col bg-red- justify-between py-2 md:min-h-[340px] lg:min-h-[370px]">
 
           <div>
             {/* QUOTATION MARK */}
@@ -52,8 +52,11 @@ export default function FarmerStories() {
             </div>
 
             {/* TESTIMONIAL TEXT */}
-            <blockquote className="max-w-lg text-xl font-semibold leading-[1.55] tracking-tight text-[#29145f] md:text-2xl">
-              Space for an approved farmer testimonial — what changed on his
+            <blockquote className="max-w-xl text-xl font-semibold leading-[1.55] tracking-tight text-[#29145f] md:text-3xl">
+              Space for an approved farmer testimonial
+              <br />
+              —
+              <br /> what changed on his
               field after the agronomist&apos;s visit.
             </blockquote>
           </div>
@@ -63,9 +66,9 @@ export default function FarmerStories() {
 
             <div className="flex items-center gap-3">
               {/* FARMER AVATAR */}
-              <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-full bg-[#f3eadb]">
+              <div className="relative h-15 w-15 shrink-0 overflow-hidden rounded-full bg-[#f3eadb]">
                 <Image
-                  src="/farmer-testimonial.jpg"
+                  src="/img.jpg"
                   alt=""
                   fill
                   sizes="40px"
@@ -74,11 +77,11 @@ export default function FarmerStories() {
               </div>
 
               <div>
-                <p className="text-[11px] font-semibold text-[#29145f]">
+                <p className="text-[17px] font-semibold text-[#29145f]">
                   Paddy grower
                 </p>
 
-                <p className="mt-1 text-[9px] text-gray-500">
+                <p className="mt-1 text-[14px] text-gray-500">
                   Farmer story · 1 of 3
                 </p>
               </div>

@@ -1,4 +1,4 @@
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight,ArrowUp } from "lucide-react";
 
 const footerColumns = [
   {
@@ -35,10 +35,10 @@ export default function Footer() {
     <footer className="border-t border-[#eeeae2] bg-white text-[#29145f]">
 
       {/* TOP CTA */}
-      <div className="mx-auto max-w-[1440px] px-5 py-10 md:px-8 lg:px-10 lg:py-12">
+      <div className="mx-auto max-w-[98vw] px-5 py-10 md:px-8 lg:px-10 lg:py-12">
         <div className="flex flex-col justify-between gap-6 sm:flex-row sm:items-center">
 
-          <h2 className="max-w-lg text-3xl font-bold leading-[1.1] tracking-tight md:text-4xl">
+          <h2 className="max-w-lg text-3xl font-bold leading-[1.1] tracking-tight md:text-5xl">
             Show us your crop.
             <br />
             <span className="text-[#c99535]">We'll show you</span> what it
@@ -48,18 +48,17 @@ export default function Footer() {
           <div className="flex flex-wrap items-center gap-2">
             <a
               href="#crops"
-              className="inline-flex items-center gap-2 rounded-full bg-[#ffc400] px-5 py-3 text-[10px] font-semibold text-[#29145f] transition hover:bg-[#edb900]"
+              className="inline-flex items-center gap-2 rounded-full bg-[#ffc400] px-7 py-3 text-[16px] font-semibold text-[#29145f] transition hover:bg-[#edb900]"
             >
               Find my crop
-              <ArrowUpRight size={13} />
+              <ArrowUp size={20} />
             </a>
 
             <a
               href="#krishikul"
-              className="inline-flex items-center gap-2 rounded-full bg-[#21104f] px-5 py-3 text-[10px] font-semibold text-white transition hover:bg-[#392274]"
+              className="inline-flex items-center gap-2 rounded-full bg-[#21104f] px-7 py-3 text-[16px] font-semibold text-white transition hover:bg-[#392274]"
             >
               WhatsApp us
-              <ArrowUpRight size={13} />
             </a>
           </div>
 
@@ -73,11 +72,11 @@ export default function Footer() {
 
           {/* COMPANY INTRO */}
           <div>
-            <p className="mb-3 text-[9px] font-semibold uppercase tracking-[0.2em] text-[#c99535]">
+            <p className="mb-3 text-[13px] font-semibold uppercase tracking-[0.2em] text-[#c99535]">
               Sunshine Agri
             </p>
 
-            <p className="max-w-[210px] text-[10px] leading-[1.8] text-gray-500">
+            <p className="max-w-[210px] text-[16px] leading-[1.8] text-gray-500">
               Sunshine Agri Pvt. Ltd., Jalgaon, Maharashtra. Crop nutrition
               made and tested for Indian fields since 2005.
             </p>
@@ -86,7 +85,7 @@ export default function Footer() {
           {/* LINK COLUMNS */}
           {footerColumns.map((column) => (
             <div key={column.heading}>
-              <p className="mb-3 text-[9px] font-semibold uppercase tracking-[0.2em] text-[#c99535]">
+              <p className="mb-3 text-[13px] font-semibold uppercase tracking-[0.2em] text-[#c99535]">
                 {column.heading}
               </p>
 
@@ -95,7 +94,7 @@ export default function Footer() {
                   <li key={label}>
                     <a
                       href={href}
-                      className="text-[10px] font-medium transition hover:text-[#c99535]"
+                      className="text-[16px] font-medium transition hover:text-[#c99535]"
                     >
                       {label}
                     </a>
@@ -116,20 +115,6 @@ export default function Footer() {
         >
           sunshine
         </p>
-      </div>
-
-      {/* BOTTOM BAR */}
-      <div className="mx-auto flex max-w-[1440px] flex-col items-center justify-between gap-3 px-5 py-4 text-[9px] text-gray-500 sm:flex-row md:px-8 lg:px-10">
-
-        <p>©designed by VanshikaSoner</p>
-
-        <a
-          href="#home"
-          className="transition hover:text-[#29145f]"
-        >
-          Back to top ↑
-        </a>
-
       </div>
 
     </footer>
