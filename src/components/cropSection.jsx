@@ -185,11 +185,11 @@ export default function CropSection() {
                 </span>
               </div>
 
-              <p className="mt-2 truncate text-[17px] font-semibold text-[#29145f]">
+              <p className="mt-2 pl-1 truncate text-[17px] font-semibold text-[#29145f]">
                 {item.name}
               </p>
 
-              <p className="mt-1 text-[13px] leading-4 text-gray-500">
+              <p className="mt-1 mb-1 pl-1 text-[13px] leading-4 text-gray-500">
                 {item.season}
               </p>
             </button>
@@ -349,11 +349,11 @@ export default function CropSection() {
                 </span>
               </div>
 
-              <p className="mt-2 truncate text-[17px] font-semibold text-[#29145f]">
+              <p className="mt-2 pl-1 truncate text-[17px] font-semibold text-[#29145f]">
                 {item.name}
               </p>
 
-              <p className="mt-1 text-[13px] leading-4 text-gray-500">
+              <p className="mt-1 mb-1 pl-1 text-[13px] leading-4 text-gray-500">
                 {item.season}
               </p>
             </button>
