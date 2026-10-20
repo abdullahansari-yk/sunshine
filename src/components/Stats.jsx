@@ -30,7 +30,7 @@ import {
   
   export default function Stats() {
     return (
-      <section className="mx-auto mt-5 w-full max-w-[1600px] px-3 md:px-5">
+      <section className="mx-auto mt-5 w-full max-w-[98vw] px-3 md:px-5">
         <div className="grid grid-cols-2 gap-3 rounded-2xl bg-[#f5f0e6] p-4 md:grid-cols-4 md:gap-5 md:px-8 md:py-6">
           {stats.map((stat) => {
             const Icon = stat.icon;

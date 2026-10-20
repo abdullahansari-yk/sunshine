@@ -7,7 +7,7 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative mx-auto mt-2 w-full max-w-[1600px] px-3 md:px-5"
+      className="relative mx-auto mt-2 w-full max-w-[98vw] px-3 md:px-5"
     >
       <div className="relative min-h-[480px] overflow-hidden rounded-[24px] bg-[#f5f0e6] md:min-h-[630px]">
 
