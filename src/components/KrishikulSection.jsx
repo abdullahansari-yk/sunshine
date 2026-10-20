@@ -52,7 +52,7 @@ export default function KrishikulSection() {
             <span className="text-[#c99a3a]">answer.</span>
           </h2>
 
-          <p className="mt-5 max-w-md text-xs leading-6 text-gray-600 md:text-[13px]">
+          <p className="mt-5 max-w-md text-xs leading-6 text-gray-600 md:text-[16px]">
             Advice before the sale, not after it. Real agronomists reply
             on WhatsApp in Marathi or Hindi, 7 am – 8 pm. Free, no app,
             no sign-up.
@@ -74,17 +74,17 @@ export default function KrishikulSection() {
                   </div>
 
                   <div className="min-w-0 flex-1">
-                    <h3 className="text-xs font-semibold text-[#29145f]">
+                    <h3 className="text-lg font-semibold text-[#29145f]">
                       {service.title}
                     </h3>
 
-                    <p className="mt-1 text-[10px] leading-4 text-gray-500">
+                    <p className="mt-1 text-[15px] leading-4 text-gray-500">
                       {service.description}
                     </p>
                   </div>
 
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-l-2xl bg-white text-[#29145f] shadow-sm transition group-hover:bg-[#ffc400]">
-                    <ArrowRight size={14} />
+                  <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-white text-[#29145f] shadow-sm transition group-hover:bg-[#ffc400]">
+                    <ArrowRight size={20} />
                   </div>
                 </a>
               );
@@ -103,12 +103,13 @@ export default function KrishikulSection() {
               </div>
 
               <div className="min-w-0">
-                <h3 className="truncate text-[11px] font-semibold">
+                <h3 className="truncate text-[11px] lg:text-[17px] font-semibold">
                   Sunshine agronomist
                 </h3>
 
-                <p className="mt-1 text-[9px] text-white/70">
-                  ● Usually replies in 15 min
+                <p className="mt-1 text-[9px] lg:text-[14px] text-white/70">
+                  <span className="h-3 w-3 rounded-full bg-[#ffc400]" />
+                  Usually replies in 15 min
                 </p>
               </div>
             </div>
@@ -118,11 +119,10 @@ export default function KrishikulSection() {
                 <button
                   key={language}
                   type="button"
-                  className={`rounded-full px-2 py-1.5 text-[8px] ${
-                    index === 0
-                      ? "bg-[#ffc400] font-semibold text-[#29145f]"
-                      : "bg-white/10 text-white"
-                  }`}
+                  className={`rounded-full px-3.5 py-2 text-[12px] ${index === 0
+                    ? "bg-[#ffc400] font-semibold text-[#29145f]"
+                    : "bg-white/10 text-white"
+                    }`}
                 >
                   {language}
                 </button>
@@ -141,29 +141,30 @@ export default function KrishikulSection() {
 
             {/* USER MESSAGE */}
             <div className="ml-auto max-w-[88%] rounded-2xl border border-[#eeeae2] bg-white p-3 shadow-sm">
-              <div className="relative h-28 overflow-hidden rounded-xl bg-[#e8e5d9] sm:h-36">
+              <div className="relative h-28 overflow-hidden rounded-xl bg-[#e8e5d9] sm:h-60 max-w-xs">
                 <Image
-                  src="/images/banana-leaves.jpg"
+                  src="/banana.jpg"
                   alt="Banana plant showing yellowing leaves"
                   fill
-                  sizes="(max-width: 640px) 75vw, 350px"
+                  // sizes="(max-width: 640px) 55vw, 350px"
+                  
                   className="object-cover"
                 />
               </div>
 
-              <p className="mt-2 text-[10px] leading-5 text-gray-700">
+              <p className="mt-2 text-[16px] max-w-sm leading-5 text-gray-700">
                 My banana leaves are turning yellow from the bottom.
                 What should I spray?
               </p>
 
-              <p className="mt-1 text-right text-[8px] text-gray-400">
+              <p className="mt-1 text-right text-[12px] text-gray-400">
                 9:12 am
               </p>
             </div>
 
             {/* AGRONOMIST RESPONSE */}
             <div className="mr-auto max-w-[90%] rounded-2xl rounded-bl-sm bg-[#29145f] p-3 text-white">
-              <p className="text-[10px] leading-5">
+              <p className="text-[16px] leading-5">
                 That's <span className="font-semibold text-[#ffc400]">
                   zinc deficiency
                 </span>{" "}
@@ -172,33 +173,33 @@ export default function KrishikulSection() {
               </p>
 
               <div className="mt-2 flex items-center gap-3 rounded-xl bg-white/10 p-2.5">
-                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white/90 text-[#c99a3a]">
-                  <FlaskConical size={16} />
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-white/90 text-[#c99a3a]">
+                  <FlaskConical size={20} />
                 </div>
 
                 <div className="min-w-0 flex-1">
-                  <p className="text-[10px] font-semibold">
+                  <p className="text-[14px] font-semibold">
                     Zinc Gold · 2 ml / litre
                   </p>
 
-                  <p className="mt-1 text-[8px] text-white/60">
+                  <p className="mt-1 text-[13px] text-white/60">
                     ₹380 · at your nearest dealer
                   </p>
                 </div>
               </div>
 
-              <p className="mt-1 text-right text-[8px] text-white/50">
+              <p className="mt-1 text-right text-[12px] text-white/50">
                 9:24 am
               </p>
             </div>
 
             {/* USER REPLY */}
             <div className="ml-auto w-fit max-w-[85%] rounded-2xl rounded-br-sm border border-[#eeeae2] bg-white p-3">
-              <p className="text-[10px] text-gray-700">
+              <p className="text-[16px] text-gray-700">
                 Thank you! Will get it today.
               </p>
 
-              <p className="mt-1 text-right text-[8px] text-gray-400">
+              <p className="mt-1 text-right text-[12px] text-gray-400">
                 9:25 am
               </p>
             </div>
@@ -216,7 +217,7 @@ export default function KrishikulSection() {
             <div className="flex min-w-0 flex-1 items-center gap-2 rounded-full border border-[#eeeae2] bg-[#fbfaf7] px-3 py-3">
               <Camera size={14} className="shrink-0 text-[#c99a3a]" />
 
-              <span className="truncate text-[10px] text-gray-400">
+              <span className="truncate text-[16px] text-gray-400">
                 Send a photo of your crop...
               </span>
             </div>
