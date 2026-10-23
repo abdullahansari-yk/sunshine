@@ -36,14 +36,82 @@ const heroFields = [
   ["fieldCardDescription", "Field card description"],
 ];
 
-function InputField({ label, value, onChange, multiline = false }) {
+
+function InputField({
+  label,
+  value,
+  onChange,
+  multiline = false,
+  image = false,
+}) {
+  const [uploading, setUploading] = useState(false);
+  const [error, setError] = useState("");
+
   const common =
     "w-full rounded-lg border border-gray-300 bg-white p-3 text-sm text-gray-900 outline-none focus:border-purple-700";
+
+  async function uploadImage(event) {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    setUploading(true);
+    setError("");
+
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+
+      const response = await fetch("/api/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || "Upload failed");
+      }
+
+      onChange(result.url);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setUploading(false);
+      event.target.value = "";
+    }
+  }
 
   return (
     <label className="block space-y-2">
       <span className="text-sm font-medium text-gray-700">{label}</span>
-      {multiline ? (
+
+      {image ? (
+        <>
+          <input
+            type="file"
+            accept="image/jpeg,image/png,image/webp"
+            onChange={uploadImage}
+            className={common}
+          />
+
+          {uploading && (
+            <p className="text-sm text-purple-700">Uploading image...</p>
+          )}
+
+          {error && <p className="text-sm text-red-600">{error}</p>}
+
+          {value && (
+            <div className="space-y-2">
+              <p className="break-all text-xs text-gray-500">{value}</p>
+              <img
+                src={value}
+                alt={`${label} preview`}
+                className="max-h-40 rounded-lg border object-contain"
+              />
+            </div>
+          )}
+        </>
+      ) : multiline ? (
         <textarea
           value={value ?? ""}
           onChange={(event) => onChange(event.target.value)}
@@ -60,6 +128,7 @@ function InputField({ label, value, onChange, multiline = false }) {
     </label>
   );
 }
+
 
 export default function AdminPage() {
   const [activeTab, setActiveTab] = useState("navbar");
@@ -177,11 +246,10 @@ export default function AdminPage() {
                 setActiveTab(tab);
                 setMessage("");
               }}
-              className={`border-b-2 px-5 py-3 text-sm font-semibold capitalize ${
-                activeTab === tab
+              className={`border-b-2 px-5 py-3 text-sm font-semibold capitalize ${activeTab === tab
                   ? "border-purple-800 text-purple-800"
                   : "border-transparent text-gray-500"
-              }`}
+                }`}
             >
               {tab === "navbar" ? "Navbar" : "Hero section"}
             </button>
@@ -199,15 +267,25 @@ export default function AdminPage() {
               Edit {activeTab === "navbar" ? "Navbar" : "Hero section"}
             </h2>
 
-            {fields.map(([key, label]) => (
-              <InputField
-                key={key}
-                label={label}
-                value={section[key]}
-                multiline={key === "description"}
-                onChange={(value) => updateField(activeTab, key, value)}
-              />
-            ))}
+
+            {fields.map(([key, label]) => {
+              const imageFields =
+                activeTab === "navbar"
+                  ? ["logo"]
+                  : ["backgroundImage", "farmerCardImage", "fieldCardImage"];
+
+              return (
+                <InputField
+                  key={key}
+                  label={label}
+                  value={section[key]}
+                  multiline={key === "description"}
+                  image={imageFields.includes(key)}
+                  onChange={(value) => updateField(activeTab, key, value)}
+                />
+              );
+            })}
+
 
             {activeTab === "navbar" && (
               <>
