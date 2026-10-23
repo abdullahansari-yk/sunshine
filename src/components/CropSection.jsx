@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { defaultSiteContent } from "@/lib/site-content";
 import Image from "next/image";
 import {
   ArrowUpRight,
@@ -11,116 +12,37 @@ import {
   AlertCircle,
 } from "lucide-react";
 
-const crops = [
-  {
-    name: "Banana",
-    season: "Flowering · Aug-Sep",
-    image: "/banana.jpg",
-    warning:
-      "Panama wilt and zinc deficiency — yellowing on the lower leaves.",
-  },
-  {
-    name: "Cotton",
-    season: "Boll setting · Sep-Oct",
-    image: "/cotton.jpg",
-    warning:
-      "Monitor boll development and maintain balanced nutrition.",
-  },
-  {
-    name: "Soybean",
-    season: "Pod filling · Sep",
-    image: "/soybean.jpg",
-    warning:
-      "Monitor pod development and check for nutrient deficiencies.",
-  },
-  {
-    name: "Sugarcane",
-    season: "Grand growth · Jul-Oct",
-    image: "/sugarcane.jpg",
-    warning:
-      "Maintain adequate nutrition during active vegetative growth.",
-  },
-  {
-    name: "Onion",
-    season: "Bulb planting · Oct-Nov",
-    image: "/onion.jpg",
-    warning:
-      "Maintain balanced nutrition during bulb development.",
-  },
-  {
-    name: "Tomato",
-    season: "Fruit set · Sep-Oct",
-    image: "/tomato.jpg",
-    warning:
-      "Monitor fruit development and maintain balanced nutrition.",
-  },
-  {
-    name: "Grape",
-    season: "October pruning",
-    image: "/grape.jpg",
-    warning:
-      "Follow an appropriate nutrition plan for the current growth stage.",
-  },
-  {
-    name: "Pomegranate",
-    season: "Hasta bahar · Sep-Oct",
-    image: "/pomegranate.jpg",
-    warning:
-      "Monitor fruit development and maintain consistent irrigation.",
-  },
-  {
-    name: "Chilli",
-    season: "Flowering · Sep-Nov",
-    image: "/chilli.jpg",
-    warning:
-      "Monitor flowering and fruit setting throughout the season.",
-  },
-  {
-    name: "Turmeric",
-    season: "Bulking · Sep-Nov",
-    image: "/tumeric.jpg",
-    warning:
-      "Maintain suitable moisture and nutrition during rhizome development.",
-  },
-  {
-    name: "Wheat",
-    season: "Sowing · Nov",
-    image: "/wheat.jpg",
-    warning:
-      "Prepare the soil and follow locally appropriate nutrient recommendations.",
-  },
-  {
-    name: "Gram",
-    season: "Sowing · Oct-Nov",
-    image: "/gram.jpg",
-    warning:
-      "Check soil conditions and follow suitable nutrient recommendations.",
-  },
-];
-
-const products = [
-  {
-    name: "Zinc Gold",
-    description: "Chelated zinc · 500 ml",
-    price: "₹380",
-  },
-  {
-    name: "Mag Gold",
-    description: "Magnesium sulphate · 1 kg",
-    price: "₹210",
-  },
-  {
-    name: "Sunshine Zinc EDTA 12%",
-    description: "Chelated zinc · 250 ml",
-    price: "₹240",
-    bestseller: true,
-  },
-];
 
 export default function CropSection() {
   const [selectedCrop, setSelectedCrop] = useState("Banana");
+  const [section, setSection] = useState(defaultSiteContent.cropSection);
 
-  const crop = crops.find((item) => item.name === selectedCrop);
+  useEffect(() => {
+    fetch("/api/site-content", { cache: "no-store" })
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to load crop content");
+        return res.json();
+      })
+      .then((data) => {
+        if (data.cropSection) {
+          setSection((current) => ({
+            ...current,
+            ...data.cropSection,
+          }));
+        }
+      })
+      .catch(console.error);
+  }, []);
+
+  const crops = section.crops;
+  const products = section.products;
+  const crop = crops.find((item) => item.name === selectedCrop) || crops[0];
+
+  useEffect(() => {
+    if (!crops.some((item) => item.name === selectedCrop) && crops.length) {
+      setSelectedCrop(crops[0].name);
+    }
+  }, [crops, selectedCrop]);
 
   return (
     <section id="crops" className="mx-auto max-w-[98vw] px-4 py-10 md:px-6">
@@ -233,7 +155,8 @@ export default function CropSection() {
               href="#products"
               className="inline-flex items-center gap-3 rounded-full bg-[#ffc400] px-4 py-3 text-[10px] lg:text-[16px] font-semibold text-[#29145f] transition hover:bg-[#edb900]"
             >
-              Full {selectedCrop.toLowerCase()} guide
+              {/* Full {selectedCrop.toLowerCase()} guide */}
+              {section.cropGuideButton.replace("{crop}", selectedCrop.toLowerCase())}
 
               <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#29145f] text-white">
                 <ArrowRight size={16} />
@@ -245,7 +168,8 @@ export default function CropSection() {
               className="inline-flex items-center gap-2 rounded-full border border-[#e7dfd2] bg-white px-4 py-3 text-[10px] lg:text-[16px] font-semibold text-[#29145f] transition hover:bg-gray-50"
             >
               <MessageCircle size={13} />
-              Ask on WhatsApp
+              {/* Ask on WhatsApp */}
+              {section.adviceButton}
             </a>
           </div>
         </div>

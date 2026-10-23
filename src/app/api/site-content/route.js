@@ -22,12 +22,28 @@ export async function GET() {
       { upsert: true }
     );
 
+    // const content = await collection.findOne({ _id: "homepage" });
+    const defaults = defaultSiteContent;
+
+    await collection.updateOne(
+      { _id: "homepage", stats: { $exists: false } },
+      { $set: { stats: defaults.stats } }
+    );
+
+    await collection.updateOne(
+      { _id: "homepage", cropSection: { $exists: false } },
+      { $set: { cropSection: defaults.cropSection } }
+    );
+
     const content = await collection.findOne({ _id: "homepage" });
+    // 
 
     return NextResponse.json(
       {
         navbar: content.navbar,
         hero: content.hero,
+        stats: content.stats,
+        cropSection: content.cropSection,
       },
       {
         headers: { "Cache-Control": "no-store" },
@@ -54,7 +70,12 @@ export async function PUT(request) {
       );
     }
 
-    const allowedSections = ["navbar", "hero"];
+    const allowedSections = [
+      "navbar",
+      "hero",
+      "stats",
+      "cropSection",
+    ];
     const updates = {};
 
     for (const section of allowedSections) {

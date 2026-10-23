@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { defaultSiteContent } from "@/lib/site-content";
 
 const navbarFields = [
-  ["logo", "Logo image path"],
+  ["logo", "Logo image"],
   ["phone", "Phone number"],
   ["phoneLink", "Phone link"],
   ["hours", "Opening hours"],
@@ -14,28 +14,38 @@ const navbarFields = [
 ];
 
 const heroFields = [
-  ["eyebrow", "Small heading above hero"],
-  ["headingLine1", "Heading — line 1"],
-  ["headingLine2", "Heading — line 2"],
+  ["eyebrow", "Small heading"],
+  ["headingLine1", "Heading line 1"],
+  ["headingLine2", "Heading line 2"],
   ["highlightedWord", "Highlighted word"],
-  ["headingLine3", "Heading — line 3"],
+  ["headingLine3", "Heading line 3"],
   ["description", "Description"],
   ["primaryButtonText", "Primary button text"],
   ["primaryButtonLink", "Primary button link"],
   ["secondaryButtonText", "Secondary button text"],
   ["secondaryButtonLink", "Secondary button link"],
   ["seasonalText", "Seasonal information"],
-  ["backgroundImage", "Background image path"],
+  ["backgroundImage", "Background image"],
   ["backgroundImageAlt", "Background image alt text"],
-  ["farmerCardImage", "Farmers card image path"],
+  ["farmerCardImage", "Farmers card image"],
   ["farmerCardHeading", "Farmers card heading"],
   ["farmerCardDescription", "Farmers card description"],
-  ["fieldCardImage", "Field card image path"],
+  ["fieldCardImage", "Field card image"],
   ["fieldCardImageAlt", "Field card image alt text"],
   ["fieldCardHeading", "Field card heading"],
   ["fieldCardDescription", "Field card description"],
 ];
 
+const cropSectionFields = [
+  ["badge", "Section badge"],
+  ["heading", "Section heading"],
+  ["description", "Section description"],
+  ["warningLabel", "Warning label"],
+  ["productsHeading", "Products heading"],
+  ["agronomistNote", "Agronomist note"],
+  ["cropGuideButton", "Crop guide button text (use {crop})"],
+  ["adviceButton", "Advice button text"],
+];
 
 function InputField({
   label,
@@ -65,7 +75,6 @@ function InputField({
         method: "POST",
         body: formData,
       });
-
       const result = await response.json();
 
       if (!response.ok) {
@@ -85,32 +94,35 @@ function InputField({
     <label className="block space-y-2">
       <span className="text-sm font-medium text-gray-700">{label}</span>
 
+      {image && (
+        <input
+          type="file"
+          accept="image/jpeg,image/png,image/webp"
+          onChange={uploadImage}
+          className={common}
+        />
+      )}
+
+      {image && uploading && (
+        <p className="text-sm text-purple-700">Uploading image...</p>
+      )}
+      {image && error && <p className="text-sm text-red-600">{error}</p>}
+
+      {image && value && (
+        <img
+          src={value}
+          alt={`${label} preview`}
+          className="max-h-40 rounded-lg border object-contain"
+        />
+      )}
+
       {image ? (
-        <>
-          <input
-            type="file"
-            accept="image/jpeg,image/png,image/webp"
-            onChange={uploadImage}
-            className={common}
-          />
-
-          {uploading && (
-            <p className="text-sm text-purple-700">Uploading image...</p>
-          )}
-
-          {error && <p className="text-sm text-red-600">{error}</p>}
-
-          {value && (
-            <div className="space-y-2">
-              <p className="break-all text-xs text-gray-500">{value}</p>
-              <img
-                src={value}
-                alt={`${label} preview`}
-                className="max-h-40 rounded-lg border object-contain"
-              />
-            </div>
-          )}
-        </>
+        <input
+          value={value ?? ""}
+          onChange={(event) => onChange(event.target.value)}
+          placeholder="Image URL or /public image path"
+          className={common}
+        />
       ) : multiline ? (
         <textarea
           value={value ?? ""}
@@ -129,7 +141,6 @@ function InputField({
   );
 }
 
-
 export default function AdminPage() {
   const [activeTab, setActiveTab] = useState("navbar");
   const [content, setContent] = useState(defaultSiteContent);
@@ -143,7 +154,6 @@ export default function AdminPage() {
         const response = await fetch("/api/site-content", {
           cache: "no-store",
         });
-
         if (!response.ok) throw new Error("Failed to load content");
 
         const data = await response.json();
@@ -153,6 +163,8 @@ export default function AdminPage() {
           ...data,
           navbar: { ...current.navbar, ...data.navbar },
           hero: { ...current.hero, ...data.hero },
+          stats: { ...current.stats, ...data.stats },
+          cropSection: { ...current.cropSection, ...data.cropSection },
         }));
       } catch (error) {
         setMessage("Could not load content. Check the server terminal.");
@@ -167,14 +179,23 @@ export default function AdminPage() {
   function updateField(section, key, value) {
     setContent((current) => ({
       ...current,
+      [section]: { ...current[section], [key]: value },
+    }));
+  }
+
+  function updateArrayItem(section, arrayName, index, key, value) {
+    setContent((current) => ({
+      ...current,
       [section]: {
         ...current[section],
-        [key]: value,
+        [arrayName]: current[section][arrayName].map((item, i) =>
+          i === index ? { ...item, [key]: value } : item
+        ),
       },
     }));
   }
 
-  function updateLink(index, key, value) {
+  function updateNavbarLink(index, key, value) {
     setContent((current) => ({
       ...current,
       navbar: {
@@ -191,8 +212,8 @@ export default function AdminPage() {
       ...current,
       navbar: {
         ...current.navbar,
-        languages: current.navbar.languages.map((language, i) =>
-          i === index ? value : language
+        languages: current.navbar.languages.map((item, i) =>
+          i === index ? value : item
         ),
       },
     }));
@@ -207,17 +228,11 @@ export default function AdminPage() {
       const response = await fetch("/api/site-content", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          [activeTab]: content[activeTab],
-        }),
+        body: JSON.stringify({ [activeTab]: content[activeTab] }),
       });
-
       const result = await response.json();
 
-      if (!response.ok) {
-        throw new Error(result.error || "Failed to save");
-      }
-
+      if (!response.ok) throw new Error(result.error || "Save failed");
       setMessage("Saved successfully!");
     } catch (error) {
       setMessage(error.message);
@@ -226,8 +241,10 @@ export default function AdminPage() {
     }
   }
 
-  const fields = activeTab === "navbar" ? navbarFields : heroFields;
-  const section = content[activeTab];
+  const navbar = content.navbar;
+  const hero = content.hero;
+  const stats = content.stats;
+  const cropSection = content.cropSection;
 
   return (
     <main className="min-h-screen bg-gray-50 text-gray-900">
@@ -237,21 +254,27 @@ export default function AdminPage() {
           Edit your website content without changing its design.
         </p>
 
-        <div className="mt-8 flex gap-3 border-b border-gray-200">
-          {["navbar", "hero"].map((tab) => (
+        <div className="mt-8 flex flex-wrap gap-3 border-b border-gray-200">
+          {[
+            ["navbar", "Navbar"],
+            ["hero", "Hero"],
+            ["stats", "Stats"],
+            ["cropSection", "Crops & Products"],
+          ].map(([key, label]) => (
             <button
-              key={tab}
+              key={key}
               type="button"
               onClick={() => {
-                setActiveTab(tab);
+                setActiveTab(key);
                 setMessage("");
               }}
-              className={`border-b-2 px-5 py-3 text-sm font-semibold capitalize ${activeTab === tab
+              className={`border-b-2 px-4 py-3 text-sm font-semibold ${
+                activeTab === key
                   ? "border-purple-800 text-purple-800"
                   : "border-transparent text-gray-500"
-                }`}
+              }`}
             >
-              {tab === "navbar" ? "Navbar" : "Hero section"}
+              {label}
             </button>
           ))}
         </div>
@@ -263,63 +286,51 @@ export default function AdminPage() {
             onSubmit={saveContent}
             className="mt-6 space-y-6 rounded-2xl border border-gray-200 bg-white p-5 md:p-8"
           >
-            <h2 className="text-xl font-semibold capitalize">
-              Edit {activeTab === "navbar" ? "Navbar" : "Hero section"}
-            </h2>
-
-
-            {fields.map(([key, label]) => {
-              const imageFields =
-                activeTab === "navbar"
-                  ? ["logo"]
-                  : ["backgroundImage", "farmerCardImage", "fieldCardImage"];
-
-              return (
-                <InputField
-                  key={key}
-                  label={label}
-                  value={section[key]}
-                  multiline={key === "description"}
-                  image={imageFields.includes(key)}
-                  onChange={(value) => updateField(activeTab, key, value)}
-                />
-              );
-            })}
-
-
             {activeTab === "navbar" && (
               <>
+                <h2 className="text-xl font-semibold">Navbar</h2>
+
+                {navbarFields.map(([key, label]) => (
+                  <InputField
+                    key={key}
+                    label={label}
+                    value={navbar[key]}
+                    image={key === "logo"}
+                    onChange={(value) => updateField("navbar", key, value)}
+                  />
+                ))}
+
                 <h3 className="border-t pt-5 text-lg font-semibold">
                   Navigation links
                 </h3>
 
-                {content.navbar.links.map((link, index) => (
+                {navbar.links.map((link, index) => (
                   <div
                     key={index}
-                    className="grid gap-4 rounded-lg border border-gray-200 p-4 md:grid-cols-2"
+                    className="grid gap-4 rounded-lg border p-4 md:grid-cols-2"
                   >
                     <InputField
                       label={`Link ${index + 1} label`}
                       value={link.label}
                       onChange={(value) =>
-                        updateLink(index, "label", value)
+                        updateNavbarLink(index, "label", value)
                       }
                     />
                     <InputField
                       label={`Link ${index + 1} URL`}
                       value={link.href}
                       onChange={(value) =>
-                        updateLink(index, "href", value)
+                        updateNavbarLink(index, "href", value)
                       }
                     />
                   </div>
                 ))}
 
                 <h3 className="border-t pt-5 text-lg font-semibold">
-                  Language labels
+                  Languages
                 </h3>
 
-                {content.navbar.languages.map((language, index) => (
+                {navbar.languages.map((language, index) => (
                   <InputField
                     key={index}
                     label={`Language ${index + 1}`}
@@ -330,13 +341,172 @@ export default function AdminPage() {
               </>
             )}
 
+            {activeTab === "hero" && (
+              <>
+                <h2 className="text-xl font-semibold">Hero section</h2>
+                {heroFields.map(([key, label]) => (
+                  <InputField
+                    key={key}
+                    label={label}
+                    value={hero[key]}
+                    multiline={key === "description"}
+                    image={[
+                      "backgroundImage",
+                      "farmerCardImage",
+                      "fieldCardImage",
+                    ].includes(key)}
+                    onChange={(value) => updateField("hero", key, value)}
+                  />
+                ))}
+              </>
+            )}
+
+            {activeTab === "stats" && (
+              <>
+                <h2 className="text-xl font-semibold">Stats section</h2>
+                <p className="text-sm text-gray-500">
+                  Edit the four numbers and their labels. Icons and layout stay
+                  unchanged.
+                </p>
+
+                {stats.items.map((item, index) => (
+                  <div
+                    key={index}
+                    className="grid gap-4 rounded-lg border p-4 md:grid-cols-2"
+                  >
+                    <InputField
+                      label={`Statistic ${index + 1} value`}
+                      value={item.value}
+                      onChange={(value) =>
+                        updateArrayItem("stats", "items", index, "value", value)
+                      }
+                    />
+                    <InputField
+                      label={`Statistic ${index + 1} label`}
+                      value={item.label}
+                      onChange={(value) =>
+                        updateArrayItem("stats", "items", index, "label", value)
+                      }
+                    />
+                  </div>
+                ))}
+              </>
+            )}
+
+            {activeTab === "cropSection" && (
+              <>
+                <h2 className="text-xl font-semibold">Crops & Products</h2>
+
+                {cropSectionFields.map(([key, label]) => (
+                  <InputField
+                    key={key}
+                    label={label}
+                    value={cropSection[key]}
+                    multiline={["description", "agronomistNote"].includes(key)}
+                    onChange={(value) =>
+                      updateField("cropSection", key, value)
+                    }
+                  />
+                ))}
+
+                <h3 className="border-t pt-5 text-lg font-semibold">
+                  Crop cards
+                </h3>
+
+                {cropSection.crops.map((crop, index) => (
+                  <div key={index} className="space-y-4 rounded-xl border p-4">
+                    <h4 className="font-semibold">
+                      Crop {index + 1}: {crop.name}
+                    </h4>
+
+                    {[
+                      ["name", "Crop name"],
+                      ["season", "Season"],
+                      ["warning", "Warning / advice"],
+                      ["image", "Crop image"],
+                    ].map(([key, label]) => (
+                      <InputField
+                        key={key}
+                        label={label}
+                        value={crop[key]}
+                        multiline={key === "warning"}
+                        image={key === "image"}
+                        onChange={(value) =>
+                          updateArrayItem(
+                            "cropSection",
+                            "crops",
+                            index,
+                            key,
+                            value
+                          )
+                        }
+                      />
+                    ))}
+                  </div>
+                ))}
+
+                <h3 className="border-t pt-5 text-lg font-semibold">
+                  Product cards
+                </h3>
+
+                {cropSection.products.map((product, index) => (
+                  <div
+                    key={index}
+                    className="space-y-4 rounded-xl border p-4"
+                  >
+                    <h4 className="font-semibold">
+                      Product {index + 1}: {product.name}
+                    </h4>
+
+                    {[
+                      ["name", "Product name"],
+                      ["description", "Product description"],
+                      ["price", "Price"],
+                    ].map(([key, label]) => (
+                      <InputField
+                        key={key}
+                        label={label}
+                        value={product[key]}
+                        onChange={(value) =>
+                          updateArrayItem(
+                            "cropSection",
+                            "products",
+                            index,
+                            key,
+                            value
+                          )
+                        }
+                      />
+                    ))}
+
+                    <label className="flex items-center gap-2 text-sm">
+                      <input
+                        type="checkbox"
+                        checked={Boolean(product.bestseller)}
+                        onChange={(event) =>
+                          updateArrayItem(
+                            "cropSection",
+                            "products",
+                            index,
+                            "bestseller",
+                            event.target.checked
+                          )
+                        }
+                      />
+                      Show bestseller label
+                    </label>
+                  </div>
+                ))}
+              </>
+            )}
+
             <div className="flex flex-wrap items-center gap-4 border-t pt-5">
               <button
                 type="submit"
                 disabled={saving}
                 className="rounded-lg bg-purple-900 px-6 py-3 text-sm font-semibold text-white hover:bg-purple-800 disabled:opacity-50"
               >
-                {saving ? "Saving..." : `Save ${activeTab}`}
+                {saving ? "Saving..." : "Save changes"}
               </button>
 
               {message && (
