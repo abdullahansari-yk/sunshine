@@ -47,13 +47,43 @@ const ProductSearch = () => {
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-semibold">
             Our six ranges
           </h1>
-          <div className="grid grid-cols-2 gap-10 mt-5">
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mt-5">
+            <ProductCard
+              numberOfProducts="10"
+              no="01"
+              name="Biofertilizers"
+              desc="Help the crop handle heat and stress"
+            />
+            <ProductCard
+              numberOfProducts="22"
+              no="02"
+              name="Plant Growth Promoters"
+              desc="Help the plant grow strong and even"
+            />
+            <ProductCard
+              numberOfProducts="16"
+              no="03"
+              name="Biostimulants"
+              desc="Help the crop handle heat and stress"
+            />
+            <ProductCard
+              numberOfProducts="24"
+              no="04"
+              name="Micronutrients"
+              desc="Small foods the crop cannot miss"
+            />
+            <ProductCard
+              numberOfProducts="38"
+              no="05"
+              name="Plant Protection"
+              desc="Stop disease and insects"
+            />
+            <ProductCard
+              numberOfProducts="12"
+              no="06"
+              name="Adjuvants"
+              desc="Make your spray stick and spread"
+            />
           </div>
         </div>
       </section>
