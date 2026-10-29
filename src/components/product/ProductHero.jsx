@@ -19,7 +19,7 @@ const ProductHero = () => {
       />
       <div className="absolute inset-0 flex flex-col items-start justify-end gap-5 py-10 px-5 md:px-10">
         <div className="flex  items-center gap-2 text-[#F0A35E] uppercase text-xs md:text-sm ">
-          <span className="block w-6 h-[1px] bg-[#F0A35E]"></span>
+          <span className="block w-6 h-px bg-[#F0A35E]"></span>
           <span>Products · 6 ranges</span>
         </div>
         <div className="text-3xl md:text-6xl lg:text-7xl font-bold text-white">

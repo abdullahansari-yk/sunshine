@@ -50,7 +50,7 @@ const ProductCard = ({ numberOfProducts, no, name, desc }) => {
             <p>Rhizoplus</p>
           </div>
         </div>
-        <div className="flex justify-between items-center bg-[#12213C] p-3 rounded-lg mt-4 cursor-pointer">
+        <div className="flex justify-between items-center bg-[#12213C] p-3 rounded-lg mt-4 cursor-pointer hover:scale-101 transition-transform duration-300">
           <p className="text-white font-semibold text-base">See all {numberOfProducts} products</p>
           <ArrowRight className="text-[#c2571a]" />
         </div>
