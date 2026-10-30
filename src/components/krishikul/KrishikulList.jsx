@@ -103,10 +103,10 @@ export default function KrishikulList() {
               className={`overflow-hidden rounded-[7px] border border-[#dedede] bg-white shadow-sm transition-all duration-300 ${
                 item.disabled
                   ? "opacity-60"
-                  : "hover:-translate-y-1 hover:shadow-md"
+                  : "hover:-translate-y-1 cursor-pointer hover:shadow-md"
               }`}
             >
-              {/* Image Placeholder */}
+              {/* Image*/}
               <div className="relative h-[200px] overflow-hidden bg-[#e9e5db]">
                 <Image src={item.imageLabel} alt={item.title} fill />
               </div>
@@ -115,22 +115,20 @@ export default function KrishikulList() {
               <div className="p-4">
                 {/* Number and Badge */}
                 <div className="mb-2 flex items-center justify-between">
-                  <span className="text-[10px] font-semibold text-[#df6825]">
+                  <span className="text-sm md:text-base font-semibold text-[#df6825]">
                     {item.number}
                   </span>
 
-                  <span className="rounded-full bg-[#FBEEE2] px-2.5 py-1 text-[9px] font-semibold text-[#d96b2c]">
+                  <span className="rounded-full bg-[#FBEEE2] px-2.5 py-1 text-xs font-semibold text-[#d96b2c]">
                     {item.badge}
                   </span>
                 </div>
 
-                {/* Title */}
-                <h3 className="mb-1.5 text-[17px] font-bold leading-tight text-[#142c4b]">
+                <h3 className="mb-1.5 text-lg md:text-xl font-bold leading-tight text-[#142c4b]">
                   {item.title}
                 </h3>
 
-                {/* Description */}
-                <p className="mb-3 min-h-[36px] text-[12px] leading-[1.5] text-[#777777]">
+                <p className="mb-3 min-h-[36px] text-sm md:text-base leading-[1.5] text-[#777777]">
                   {item.description}
                 </p>
 
