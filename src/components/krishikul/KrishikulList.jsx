@@ -72,25 +72,25 @@ const features = [
 export default function KrishikulList() {
   return (
     <section className="w-full bg-[#f7f4ee] px-6 py-12 md:px-10 lg:px-16 lg:py-16">
-      <div className="mx-auto max-w-[1400px]">
+      <div className="mx-auto w-[90vw]">
         {/* Section Heading */}
         <div className="mb-8 flex flex-col justify-between gap-5 md:flex-row md:items-end">
           <div>
             <div className="mb-3 flex items-center gap-2">
               <span className="h-[2px] w-5 bg-[#e66a22]" />
-              <span className="text-[10px] font-semibold uppercase tracking-[2px] text-[#d96825]">
+              <span className="text-xs font-semibold uppercase tracking-[2px] text-[#d96825]">
                 Start Here
               </span>
             </div>
 
-            <h2 className="max-w-[430px] text-[30px] font-bold leading-[1.05] text-[#142c4b] md:text-[38px]">
+            <h2 className="max-w-[430px] text-3xl font-bold leading-[1.05] text-[#142c4b] md:text-4xl">
               What do you want
               <br />
               <span className="text-[#ed6b19]">to do today?</span>
             </h2>
           </div>
 
-          <p className="max-w-[260px] pb-1 text-[13px] leading-6 text-[#777777]">
+          <p className="max-w-82.5  pb-1 text-sm md:text-base leading-6 text-[#777777]">
             Tap one picture. Each one opens its own page.
           </p>
         </div>
