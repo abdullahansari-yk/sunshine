@@ -5,7 +5,7 @@ const KrishikulHero = () => {
   return (
     <section className="relative min-h-[90vh]  overflow-hidden">
       <Image
-        src="/cotton.jpg"
+        src="/gram.jpg"
         alt="banana image"
         fill
         sizes="100vw"
